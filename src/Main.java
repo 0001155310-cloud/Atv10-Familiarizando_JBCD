@@ -1,6 +1,3 @@
-// =================================================================
-// 4. MAIN.java (Interface de Usuário/Teste)
-// =================================================================
 import java.util.Scanner;
 
 public class Main {
@@ -13,7 +10,9 @@ public class Main {
         // ================================
         AlunoDAO alunoDAO = new AlunoDAO();
 
-        System.out.println("=== CADASTRO DE ALUNO ===");
+        System.out.println("\n====================================");
+        System.out.println("        CADASTRO DE ALUNO");
+        System.out.println("====================================");
 
         // --- CREATE aluno ---
         System.out.print("Digite o nome do aluno: ");
@@ -25,14 +24,23 @@ public class Main {
         Aluno novoAluno = new Aluno(nomeAluno, emailAluno);
         alunoDAO.inserir(novoAluno);
 
+        System.out.println("\nAluno cadastrado com sucesso!");
+
         // --- READ alunos ---
-        System.out.println("\n--- LISTA DE ALUNOS ---");
+        System.out.println("\n----------- LISTA DE ALUNOS -----------");
         for (Aluno a : alunoDAO.listar()) {
-            System.out.println(a.getId() + " - " + a.getNome() + " - " + a.getEmail());
+            System.out.println(
+                    "ID: " + a.getId() +
+                            " | Nome: " + a.getNome() +
+                            " | Email: " + a.getEmail()
+            );
         }
 
         // --- UPDATE aluno ---
-        System.out.println("\n=== ATUALIZAR UM ALUNO ===");
+        System.out.println("\n====================================");
+        System.out.println("        ATUALIZAR UM ALUNO");
+        System.out.println("====================================");
+
         System.out.print("Digite o ID do aluno que deseja atualizar: ");
         int idAlunoAtualizar = sc.nextInt();
         sc.nextLine();
@@ -46,22 +54,29 @@ public class Main {
         Aluno alunoAtualizado = new Aluno(idAlunoAtualizar, novoNomeAluno, novoEmailAluno);
         alunoDAO.atualizar(alunoAtualizado);
 
+        System.out.println("\nAluno atualizado com sucesso!");
+
         // --- DELETE aluno ---
-        System.out.println("\n=== DELETAR UM ALUNO ===");
+        System.out.println("\n====================================");
+        System.out.println("        DELETAR UM ALUNO");
+        System.out.println("====================================");
+
         System.out.print("Digite o ID do aluno que deseja deletar: ");
         int idAlunoDeletar = sc.nextInt();
         sc.nextLine();
 
         alunoDAO.deletar(idAlunoDeletar);
-
+        System.out.println("\nAluno deletado com sucesso!");
 
 
         // ================================
-        // 2. PROFESSOR (NOVO)
+        // 2. PROFESSOR
         // ================================
         ProfessorDAO professorDAO = new ProfessorDAO();
 
-        System.out.println("\n\n=== CADASTRO DE PROFESSOR ===");
+        System.out.println("\n\n====================================");
+        System.out.println("       CADASTRO DE PROFESSOR");
+        System.out.println("====================================");
 
         // --- CREATE professor ---
         System.out.print("Digite o nome do professor: ");
@@ -74,8 +89,14 @@ public class Main {
         int idadeProfessor = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Digite o CPF: ");
+        System.out.print("Digite o CPF (somente números): ");
         String cpfProfessor = sc.nextLine();
+
+        while (cpfProfessor.length() != 11 || !cpfProfessor.matches("\\d+")) {
+            System.out.println("[ERRO] CPF inválido! Digite exatamente 11 números.");
+            System.out.print("CPF: ");
+            cpfProfessor = sc.nextLine();
+        }
 
         System.out.print("Digite o estado (UF): ");
         String estadoProfessor = sc.nextLine();
@@ -89,19 +110,23 @@ public class Main {
         );
 
         professorDAO.inserir(novoProfessor);
+        System.out.println("\nProfessor cadastrado com sucesso!");
 
         // --- READ professores ---
-        System.out.println("\n--- LISTA DE PROFESSORES ---");
+        System.out.println("\n----------- LISTA DE PROFESSORES -----------");
         for (Professor p : professorDAO.listar()) {
             System.out.println(
-                    p.getId() + " - " +
-                            p.getNome() + " - " +
-                            p.getEmail()
+                    "ID: " + p.getId() +
+                            " | Nome: " + p.getNome() +
+                            " | Email: " + p.getEmail()
             );
         }
 
         // --- UPDATE professor ---
-        System.out.println("\n=== ATUALIZAR UM PROFESSOR ===");
+        System.out.println("\n====================================");
+        System.out.println("       ATUALIZAR UM PROFESSOR");
+        System.out.println("====================================");
+
         System.out.print("Digite o ID do professor que deseja atualizar: ");
         int idProfessorAtualizar = sc.nextInt();
         sc.nextLine();
@@ -116,8 +141,14 @@ public class Main {
         int idadeNovaProfessor = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Novo CPF: ");
+        System.out.print("Novo CPF (somente números): ");
         String cpfNovoProfessor = sc.nextLine();
+
+        while (cpfNovoProfessor.length() != 11) {
+            System.out.println("[ERRO] CPF inválido! Digite exatamente 11 números, não utilize símbolos!.");
+            System.out.print("CPF: ");
+            cpfNovoProfessor = sc.nextLine();
+        }
 
         System.out.print("Novo estado (UF): ");
         String estadoNovoProfessor = sc.nextLine();
@@ -137,13 +168,21 @@ public class Main {
 
         professorDAO.atualizar(professorAtualizado);
 
+        System.out.println("\nProfessor atualizado com sucesso!");
+
         // --- DELETE professor ---
-        System.out.println("\n=== DELETAR UM PROFESSOR ===");
+        System.out.println("\n====================================");
+        System.out.println("        DELETAR UM PROFESSOR");
+        System.out.println("====================================");
+
         System.out.print("Digite o ID do professor que deseja deletar: ");
         int idProfessorDeletar = sc.nextInt();
 
         professorDAO.deletar(idProfessorDeletar);
+        System.out.println("\nProfessor deletado com sucesso!");
 
+
+        System.out.println("\n ================================ Programa Finalizado ====================================");
         sc.close();
     }
 }
